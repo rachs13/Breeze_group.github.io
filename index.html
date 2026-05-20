@@ -17,22 +17,6 @@
 
 .appointment-modal{position:fixed;inset:0;z-index:140;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.78)}.appointment-modal.open{display:flex}.appointment-box{width:min(640px,100%);max-height:92vh;overflow:auto;background:#071014;border:1px solid rgba(0,151,178,.48);border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.6);padding:26px}.appointment-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.appointment-head h2{margin:0;font-size:30px;line-height:1.15;color:#fff}.appointment-head p{margin:8px 0 0;color:var(--muted)}.appointment-close{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:28px;line-height:1;cursor:pointer}.appointment-close:hover{border-color:var(--accent);color:var(--accent)}.appointment-form{display:grid;gap:14px}.appointment-form label{display:grid;gap:7px;color:#fff;font-weight:700}.appointment-form input,.appointment-form select,.appointment-form textarea{width:100%;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;padding:13px 14px;font:inherit;outline:none}.appointment-form input:focus,.appointment-form select:focus,.appointment-form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,151,178,.18)}.appointment-form textarea{min-height:110px;resize:vertical}.appointment-form select option{color:#111}.appointment-note{font-size:13px;color:var(--muted);margin:0}.appointment-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}.appointment-submit{cursor:pointer}.btn-outline{cursor:pointer}
 
-
-.review-submit-card{margin-top:28px}
-.review-form{display:grid;gap:14px;margin-top:18px}
-.review-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.review-form input,.review-form textarea,.review-form select{
-  width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;
-  padding:13px 14px;background:rgba(255,255,255,.08);color:#fff;outline:none;
-}
-.review-form textarea{min-height:120px;resize:vertical}
-.review-form input::placeholder,.review-form textarea::placeholder{color:rgba(255,255,255,.58)}
-.review-form select option{color:#111}
-.review-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px}
-.review-note{font-size:14px;color:var(--muted);margin:10px 0 0}
-.google-review-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
-@media (max-width:700px){.review-form .form-row{grid-template-columns:1fr}}
-
 </style>
   <script type="application/ld+json">
   {
@@ -262,37 +246,6 @@
           <strong>Ieva</strong>
         </div>
       </div>
-      <div class="card review-submit-card">
-        <h3>Atstāj savu atsauksmi</h3>
-        <p>Priecāsimies par Tavu vērtējumu. Atsauksme tiks nosūtīta mums uz e-pastu, un vari arī atstāt atsauksmi Google.</p>
-        <form class="review-form" action="https://formsubmit.co/info@breezegroup.lv" method="POST">
-          <input type="hidden" name="_subject" value="Jauna klienta atsauksme no mājaslapas">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://breezegroup.lv/?review=sent">
-          <div class="form-row">
-            <input type="text" name="name" placeholder="Vārds" required>
-            <input type="text" name="contact" placeholder="Telefons vai e-pasts">
-          </div>
-          <div class="form-row">
-            <select name="rating" aria-label="Vērtējums" required>
-              <option value="5">5 ★</option>
-<option value="4">4 ★</option>
-<option value="3">3 ★</option>
-<option value="2">2 ★</option>
-<option value="1">1 ★</option>
-            </select>
-            <input type="text" name="service" placeholder="Serviss / Service / Сервис">
-          </div>
-          <textarea name="review" placeholder="Tava atsauksme" required></textarea>
-          <div class="review-actions">
-            <button class="btn btn-primary" type="submit">Nosūtīt atsauksmi</button>
-            <a class="btn google-review-btn" href="https://www.google.com/search?q=SIA+Breeze+Group+Google+reviews" target="_blank" rel="noopener">Atstāt atsauksmi Google</a>
-          </div>
-          <p class="review-note">Paldies Jums! Atsauksmes palīdz mums pilnveidoties.</p>
-        </form>
-      </div>
-
     </div>
   </section>
 
@@ -354,7 +307,7 @@
           </div>
           <div>
             <span>E-pasts</span>
-            <a href="mailto:info@breezegroup.lv">info@breezegroup.lv</a>
+            <a href="mailto:info@breezegroup.lv?subject=Pieteikums%20no%20breezegroup.lv&body=Labdien%2C%0A%0AV%C4%93los%20sazin%C4%81ties%20ar%20SIA%20Breeze%20Group.%0A%0A">info@breezegroup.lv</a>
           </div>
           <div>
             <span>Darba laiks</span>
@@ -385,10 +338,11 @@
         <button class="appointment-close" type="button" aria-label="Aizvērt pieteikuma formu">×</button>
       </div>
 
-      <form class="appointment-form" action="https://formsubmit.co/info@breezegroup.lv" method="POST">
-        <input type="hidden" name="_subject" value="Jauns servisa pieteikums no breezegroup.lv">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
+      <form class="appointment-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="IEVIETO_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="Jauns servisa pieteikums no breezegroup.lv">
+        <input type="hidden" name="from_name" value="Breeze Group mājaslapa">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none;">
 
         <label>Vārds, uzvārds
           <input type="text" name="Vārds" autocomplete="name" required>
@@ -430,6 +384,7 @@
         </label>
 
         <p class="appointment-note">Pieteikums tiks nosūtīts uz info@breezegroup.lv.</p>
+        <p class="appointment-status" aria-live="polite"></p>
 
         <div class="appointment-actions">
           <button class="btn btn-primary appointment-submit" type="submit">Nosūtīt pieteikumu</button>
@@ -469,6 +424,49 @@
     if (closeVisitForm) closeVisitForm.addEventListener('click', closeAppointmentModal);
     if (cancelVisitForm) cancelVisitForm.addEventListener('click', closeAppointmentModal);
     if (appointmentModal) appointmentModal.addEventListener('click', (event) => { if (event.target === appointmentModal) closeAppointmentModal(); });
+
+    const appointmentForm = document.querySelector('.appointment-form');
+    const appointmentStatus = document.querySelector('.appointment-status');
+    if (appointmentForm) {
+      appointmentForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitButton = appointmentForm.querySelector('.appointment-submit');
+        const originalText = submitButton ? submitButton.textContent : '';
+        if (appointmentStatus) {
+          appointmentStatus.textContent = 'Nosūta...';
+          appointmentStatus.classList.remove('error', 'success');
+        }
+        if (submitButton) submitButton.disabled = true;
+        try {
+          const formData = new FormData(appointmentForm);
+          const response = await fetch(appointmentForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          const result = await response.json();
+          if (response.ok && result.success) {
+            if (appointmentStatus) {
+              appointmentStatus.textContent = 'Paldies! Pieteikums ir nosūtīts. Mēs ar jums sazināsimies.';
+              appointmentStatus.classList.add('success');
+            }
+            appointmentForm.reset();
+          } else {
+            throw new Error(result.message || 'Form submission failed');
+          }
+        } catch (error) {
+          if (appointmentStatus) {
+            appointmentStatus.textContent = 'Kļūda! Pieteikumu neizdevās nosūtīt. Lūdzu, sazinieties pa e-pastu info@breezegroup.lv vai tālruni.';
+            appointmentStatus.classList.add('error');
+          }
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+          }
+        }
+      });
+    }
     const galleryData = {
       kondicionieri: { title: 'Kondicionieru apkope', images: ['./assets/gallery/kondicionieru-apkope-2.jpg','./assets/gallery/kondicionieru-apkope-3.jpg','./assets/gallery/kondicionieru-apkope-4.jpg','./assets/gallery/kondicionieru-apkope-5.jpg','./assets/gallery/kondicionieru-apkope-6.jpg','./assets/gallery/kondicionieru-apkope-7.jpg','./assets/gallery/kondicionieru-apkope-8.jpg'] },
       antikorozija: { title: 'Antikorozijas apstrāde', images: ['./assets/gallery/antikorozijas-apstrade-1.jpg','./assets/gallery/antikorozijas-apstrade-2.jpg','./assets/gallery/antikorozijas-apstrade-3.jpg','./assets/gallery/antikorozijas-apstrade-4.jpg','./assets/gallery/antikorozijas-apstrade-5.jpg','./assets/gallery/an1.jpg','./assets/gallery/anti1.jpg','./assets/gallery/anti3.jpg'] },
