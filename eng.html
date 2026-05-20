@@ -337,12 +337,12 @@
         <button class="appointment-close" type="button" aria-label="Close service booking form">×</button>
       </div>
 
-      <form class="appointment-form" action="https://formsubmit.co/info@breezegroup.lv" method="POST">
-        <input type="hidden" name="_subject" value="New service booking - EN">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="Language" value="EN">
-        <input type="hidden" name="_next" value="https://breezegroup.lv/">
+      <form class="appointment-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="707d2c18-fbc4-444b-9fc2-6c8f6cb0b0d1">
+        <input type="hidden" name="subject" value="New service booking from breezegroup.lv">
+        <input type="hidden" name="from_name" value="Breeze Group mājaslapa">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none;">
+
 
         <label>Name
           <input type="text" name="Name" required autocomplete="name">
