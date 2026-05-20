@@ -306,7 +306,7 @@
           </div>
           <div>
             <span>E-mail</span>
-            <a href="mailto:info@breezegroup.lv">info@breezegroup.lv</a>
+            <a href="mailto:info@breezegroup.lv?subject=%D0%97%D0%B0%D1%8F%D0%B2%D0%BA%D0%B0%20%D1%81%20breezegroup.lv&body=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%0A%0A%D0%A5%D0%BE%D1%87%D1%83%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D1%81%20SIA%20Breeze%20Group.%0A%0A">info@breezegroup.lv</a>
           </div>
           <div>
             <span>Время работы</span>
@@ -337,7 +337,7 @@
         <button class="appointment-close" type="button" aria-label="Закрыть форму записи">×</button>
       </div>
 
-      <form class="appointment-form" action="https://formsubmit.co/info@breezegroup.lv" method="POST">
+      <form class="appointment-form" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="_subject" value="Новая заявка на сервис - RU">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_template" value="table">
@@ -380,6 +380,7 @@
         </label>
 
         <p class="appointment-note">Заявка будет отправлена на info@breezegroup.lv.</p>
+        <p class="appointment-status" aria-live="polite"></p>
 
         <div class="appointment-actions">
           <button class="btn btn-primary appointment-submit" type="submit">Отправить заявку</button>
@@ -422,6 +423,49 @@
     if (cancelVisitForm) cancelVisitForm.addEventListener('click', closeAppointmentModal);
     if (appointmentModal) appointmentModal.addEventListener('click', (event) => { if (event.target === appointmentModal) closeAppointmentModal(); });
 
+
+    const appointmentForm = document.querySelector('.appointment-form');
+    const appointmentStatus = document.querySelector('.appointment-status');
+    if (appointmentForm) {
+      appointmentForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitButton = appointmentForm.querySelector('.appointment-submit');
+        const originalText = submitButton ? submitButton.textContent : '';
+        if (appointmentStatus) {
+          appointmentStatus.textContent = 'Отправка...';
+          appointmentStatus.classList.remove('error', 'success');
+        }
+        if (submitButton) submitButton.disabled = true;
+        try {
+          const formData = new FormData(appointmentForm);
+          const response = await fetch(appointmentForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          const result = await response.json();
+          if (response.ok && result.success) {
+            if (appointmentStatus) {
+              appointmentStatus.textContent = 'Спасибо! Заявка отправлена. Мы свяжемся с вами.';
+              appointmentStatus.classList.add('success');
+            }
+            appointmentForm.reset();
+          } else {
+            throw new Error(result.message || 'Form submission failed');
+          }
+        } catch (error) {
+          if (appointmentStatus) {
+            appointmentStatus.textContent = 'Ошибка! Заявку не удалось отправить. Пожалуйста, свяжитесь по e-mail info@breezegroup.lv или телефону.';
+            appointmentStatus.classList.add('error');
+          }
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+          }
+        }
+      });
+    }
     const galleryData = {
       kondicionieri: { title: 'Обслуживание кондиционеров', images: ['./assets/gallery/kondicionieru-apkope-2.jpg','./assets/gallery/kondicionieru-apkope-3.jpg','./assets/gallery/kondicionieru-apkope-4.jpg','./assets/gallery/kondicionieru-apkope-5.jpg','./assets/gallery/kondicionieru-apkope-6.jpg','./assets/gallery/kondicionieru-apkope-7.jpg','./assets/gallery/kondicionieru-apkope-8.jpg'] },
       antikorozija: { title: 'Антикоррозийная обработка', images: ['./assets/gallery/antikorozijas-apstrade-1.jpg','./assets/gallery/antikorozijas-apstrade-2.jpg','./assets/gallery/antikorozijas-apstrade-3.jpg','./assets/gallery/antikorozijas-apstrade-4.jpg','./assets/gallery/antikorozijas-apstrade-5.jpg','./assets/gallery/an1.jpg','./assets/gallery/anti1.jpg','./assets/gallery/anti3.jpg'] },
